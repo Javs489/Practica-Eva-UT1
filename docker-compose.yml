@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres_practica
+    restart: unless-stopped
+
+    command: 
+      - postgres
+      - -c
+      - max_connections=150
+      - -c
+      - shared_buffers=128MB
+      - -c
+      - work_mem=16MB
+      - -c
+      - logging_collector=on
+      - -c
+      - log_min_duration_statement=2000
+      - -c
+      - listen_addresses=127.0.0.1
+
+    environment:
+      POSTGRES_USER: admin_db
+      POSTGRES_DB: practica_db
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password_secret
+    secrets:
+      - db_password_secret
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - red_segura_bridge
+
+
+secrets:
+  db_password_secret:
+    file: ./db_contrasena.txt
+
+volumes:
+  pg_data:
+    driver: local
+  pg_logs:           
+    driver: local
+
+networks:
+  red_segura_bridge:
+    driver: bridge
