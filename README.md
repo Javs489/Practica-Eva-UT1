@@ -4,9 +4,7 @@ Practica Postgres
 Repositorio de la práctica.
 
 
-Video:
-
-
+Video: https://www.youtube.com/watch?v=Ndf5z4aUqsQ
 ---
 
 Estructura de la Práctica
