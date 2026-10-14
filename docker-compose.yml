@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: postgres_practica
-    restart: unless-stopped
+    restart: always
 
     command: 
       - postgres
@@ -17,7 +17,10 @@ services:
       - -c
       - log_min_duration_statement=2000
       - -c
+      - log_directory=/var/lib/postgresql/log
+      - -c
       - listen_addresses=127.0.0.1
+
 
     environment:
       POSTGRES_USER: admin_db
@@ -27,6 +30,7 @@ services:
       - db_password_secret
     volumes:
       - pg_data:/var/lib/postgresql/data
+      - pg_logs:/var/log/postgresql
     ports:
       - "5432:5432"
     networks:
